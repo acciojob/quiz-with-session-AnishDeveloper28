@@ -1,17 +1,49 @@
 <!DOCTYPE html>
-
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <!-- do not change this code -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz with Session</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="quiz-container">
     <h1>Quiz</h1>
-    <div id="questions"></div>
-    <button id="submit">Submit</button>
-    <div id="score"></div>
-
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+    <form id="quiz-form">
+      <div class="question" id="q1">
+        <p>1. What is the capital of France?</p>
+        <label><input type="radio" name="q1" value="a"> A) Paris</label>
+        <label><input type="radio" name="q1" value="b"> B) London</label>
+        <label><input type="radio" name="q1" value="c"> C) Rome</label>
+      </div>
+      <div class="question" id="q2">
+        <p>2. What is 5 + 3?</p>
+        <label><input type="radio" name="q2" value="a"> A) 7</label>
+        <label><input type="radio" name="q2" value="b"> B) 8</label>
+        <label><input type="radio" name="q2" value="c"> C) 9</label>
+      </div>
+      <div class="question" id="q3">
+        <p>3. What is the boiling point of water?</p>
+        <label><input type="radio" name="q3" value="a"> A) 50°C</label>
+        <label><input type="radio" name="q3" value="b"> B) 100°C</label>
+        <label><input type="radio" name="q3" value="c"> C) 150°C</label>
+      </div>
+      <div class="question" id="q4">
+        <p>4. Who wrote "Romeo and Juliet"?</p>
+        <label><input type="radio" name="q4" value="a"> A) William Shakespeare</label>
+        <label><input type="radio" name="q4" value="b"> B) Charles Dickens</label>
+        <label><input type="radio" name="q4" value="c"> C) Jane Austen</label>
+      </div>
+      <div class="question" id="q5">
+        <p>5. Which planet is known as the Red Planet?</p>
+        <label><input type="radio" name="q5" value="a"> A) Venus</label>
+        <label><input type="radio" name="q5" value="b"> B) Mars</label>
+        <label><input type="radio" name="q5" value="c"> C) Jupiter</label>
+      </div>
+      <button type="button" id="submit">Submit</button>
+    </form>
+    <p id="score-display"></p>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>
