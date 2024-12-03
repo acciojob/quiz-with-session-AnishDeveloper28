@@ -2,6 +2,8 @@ const questions = [
   { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], answer: "4" },
   { question: "Which is a programming language?", options: ["HTML", "CSS", "JavaScript", "Bootstrap"], answer: "JavaScript" },
   { question: "What does CSS stand for?", options: ["Cascading Style Sheets", "Creative Style Sheets", "Colorful Style Sheets", "Computer Style Sheets"], answer: "Cascading Style Sheets" },
+  { question: "Which company owns GitHub?", options: ["Google", "Microsoft", "Amazon", "Apple"], answer: "Microsoft" },
+  { question: "What does SQL stand for?", options: ["Structured Query Language", "Strong Query Language", "Simple Query Logic", "None of the above"], answer: "Structured Query Language" },
 ];
 
 const questionsContainer = document.getElementById("questions-container");
@@ -26,7 +28,8 @@ function loadQuestions() {
       input.name = `question-${index}`;
       input.value = option;
 
-      if (sessionStorage.getItem(`question-${index}`) === option) {
+		
+		if (sessionStorage.getItem(`question-${index}`) === option) {
         input.checked = true;
       }
 
@@ -57,7 +60,6 @@ submitBtn.addEventListener("click", () => {
   scoreDisplay.textContent = `Your score is ${score} out of ${questions.length}.`;
   scoreContainer.classList.remove("hidden");
 
-  
   localStorage.setItem("score", score);
 });
 
