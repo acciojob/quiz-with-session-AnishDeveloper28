@@ -1,83 +1,64 @@
 const questions = [
-  {
-    question: "What is the capital of France?",
-    choices: ["Paris", "London", "Berlin", "Madrid"],
-    answer: "Paris",
-  },
-  {
-    question: "What is the highest mountain in the world?",
-    choices: ["Everest", "Kilimanjaro", "Denali", "Matterhorn"],
-    answer: "Everest",
-  },
-  {
-    question: "What is the largest country by area?",
-    choices: ["Russia", "China", "Canada", "United States"],
-    answer: "Russia",
-  },
-  {
-    question: "Which is the largest planet in our solar system?",
-    choices: ["Earth", "Jupiter", "Mars"],
-    answer: "Jupiter",
-  },
-  {
-    question: "What is the capital of Canada?",
-    choices: ["Toronto", "Montreal", "Vancouver", "Ottawa"],
-    answer: "Ottawa",
-  },
-];
+  { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], answer: "4" },
+  { question: "Which is a programming language?", options: ["HTML", "CSS", "JavaScript", "Bootstrap"], answer: "JavaScript" },
+  { question: "What does CSS stand for?", options: ["Cascading Style Sheets", "Colorful Style Sheets", "Computer Style Sheets", "Creative Style Sheets"], answer: "Cascading Style Sheets" },
+ ];
 
-let userAnswers = JSON.parse(sessionStorage.getItem("progress")) || new Array(questions.length).fill(null);
+const questionsContainer = document.getElementById("questions-container");
+const quizForm = document.getElementById("quiz-form");
+const submitBtn = document.getElementById("submit-btn");
+const scoreContainer = document.getElementById("score-container");
+const scoreDisplay = document.getElementById("score-display");
 
-function renderQuestions() {
-  const questionsElement = document.getElementById("questions");
-  questionsElement.innerHTML = ''; // Clear previous questions
-  questions.forEach((question, i) => {
-    const questionElement = document.createElement("div");
-    const questionText = document.createTextNode(question.question);
-    questionElement.appendChild(questionText);
-    
-    question.choices.forEach((choice) => {
-      const choiceElement = document.createElement("input");
-      choiceElement.setAttribute("type", "radio");
-      choiceElement.setAttribute("name", question-${i});
-      choiceElement.setAttribute("value", choice);
-      if (userAnswers[i] === choice) {
-        choiceElement.setAttribute("checked", true);
+// Load Questions and Preserve Progress
+function loadQuestions() {
+  questions.forEach((q, index) => {
+    const questionDiv = document.createElement("div");
+    questionDiv.className = "question";
+
+    const questionText = document.createElement("p");
+    questionText.textContent = `${index + 1}. ${q.question}`;
+    questionDiv.appendChild(questionText);
+
+    q.options.forEach((option) => {
+      const label = document.createElement("label");
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = `question-${index}`;
+      input.value = option;
+
+      if (sessionStorage.getItem(`question-${index}`) === option) {
+        input.checked = true;
       }
 
-      choiceElement.addEventListener("change", () => {
-        userAnswers[i] = choice;
-        sessionStorage.setItem("progress", JSON.stringify(userAnswers));
-      });
-
-      const choiceText = document.createTextNode(choice);
-      questionElement.appendChild(choiceElement);
-      questionElement.appendChild(choiceText);
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(option));
+      questionDiv.appendChild(label);
     });
-    
-    questionsElement.appendChild(questionElement);
+
+    questionsContainer.appendChild(questionDiv);
   });
 }
 
-function calculateScore() {
+quizForm.addEventListener("change", (e) => {
+  const { name, value } = e.target;
+  sessionStorage.setItem(name, value);
+});
+
+submitBtn.addEventListener("click", () => {
   let score = 0;
-  questions.forEach((question, i) => {
-    if (userAnswers[i] === question.answer) {
+
+  questions.forEach((q, index) => {
+    const selectedOption = sessionStorage.getItem(`question-${index}`);
+    if (selectedOption === q.answer) {
       score++;
     }
   });
-  return score;
-}
 
-function displayScore(score) {
-  const scoreElement = document.getElementById("score");
-  scoreElement.textContent = Your score is ${score} out of 5.;
-  localStorage.setItem("score", score); // Store the score in localStorage
-}
+  scoreDisplay.textContent = `Your score is ${score} out of ${questions.length}.`;
+  scoreContainer.classList.remove("hidden");
 
-document.getElementById("submit").addEventListener("click", () => {
-  const score = calculateScore();
-  displayScore(score);
+  localStorage.setItem("score", score);
 });
 
-renderQuestions();
+loadQuestions();
